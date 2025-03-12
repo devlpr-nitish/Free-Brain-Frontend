@@ -3,9 +3,9 @@ import { FaXTwitter } from "react-icons/fa6";
 import { IoDocumentsOutline } from "react-icons/io5";
 import { LiaFileVideoSolid } from "react-icons/lia";
 import { FaCode } from "react-icons/fa";
-import ShareICon from "../../icons/ShareICon";
-import DeleteIcon from "../../icons/DeleteIcon";
-import CalenderIcon from "../../icons/CalenderIcon";
+import ShareICon from "@/icons/ShareICon";
+import DeleteIcon from "@/icons/DeleteIcon";
+import CalenderIcon from "@/icons/CalenderIcon";
 
 interface CardProps {
   title: string;
@@ -67,7 +67,7 @@ const Card = ({ title, type, content, tags, createdAt }: CardProps) => {
 
       <div className="flex items-center justify-end gap-2 text-sm font-normal opacity-60">
         <div className="">
-            <CalenderIcon/>
+            <CalenderIcon />
         </div>
         <div className="">
          {formatDate(createdAt)}

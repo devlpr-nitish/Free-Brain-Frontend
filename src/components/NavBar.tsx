@@ -1,53 +1,127 @@
-import { useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import AccountIcon from "../icons/AccountIcon"
 import DashboardIcon from "../icons/DashboardIcon"
-import HomeIcon from "../icons/HomeIcon";
-
+import { useState } from "react";
+import AddUserIcon from "../icons/AddUserIcon";
+import { LuBrain } from "react-icons/lu";
+import { motion } from "framer-motion";
+import { Button } from "./ui/button";
+import MenuIcon from "@/icons/MenuIcon";
+import {
+    Drawer,
+    DrawerClose,
+    DrawerContent,
+    DrawerDescription,
+    DrawerFooter,
+    DrawerHeader,
+    DrawerTitle,
+    DrawerTrigger,
+} from "@/components/ui/drawer"
 
 
 const NavBar = () => {
 
+    const token = localStorage.getItem("token");
+    const username = localStorage.getItem("username");
+
     const navItems = [
-        {
-            name:"Free Brain",
-            icon: <HomeIcon/>,
-            link:"/"
-        },
-        {
-            name:"Dashboard",
-            icon: <DashboardIcon/>,
-            link:"/dashboard"
-        },
-        {
-            name:"Account",
-            icon:<AccountIcon/>,
-            link:"/user"
-        }
-    ]
+        { item: "Home", link: "/" },
+        { item: "Dashboard", link: "/dashboard" },
+    ];
 
     const navigate = useNavigate();
 
-    const navigateOnClick = (link:string)    =>{
+    const navigateOnClick = (link: string) => {
         navigate(link);
-    }
+    };
 
-  return (
-    <div className= "w-full bg-white flex justify-evenly px-4 py-2 mx-auto rounded-md h-20 mb-10">
-        {
-            navItems.map((item, index) =>(
-                <div key={index} onClick={() => navigateOnClick(item.link)} className="flex items-center gap-1 cursor-pointer p-4 rounded-md transform transition duration-300 hover:text-purple-600 ">
-                    <div className="text-purple-600 text-3xl">
-                        {item.icon}
-                    </div>
+    return (
+        <div className="w-full bg-[#171717] flex justify-between items-center py-2 mx-auto rounded-lg border-[1px] border-[#404040] h-20 md:px-4 md:flex-row flex-row gap-4 mb-6">
+            <div className="flex justify-between items-center gap-4 w-full md:w-auto">
+                <motion.div
+                    initial={{}}
+                    whileHover={{ color: "#594ef5", scale: 1.12 }}
+                    transition={{ duration: 1.5 }}
+                    onClick={() => navigateOnClick("/")}
+                    className="text-lg px-6 cursor-pointer z-10"
+                    aria-label="Navigate to Home"
+                >
+                    <LuBrain className="text-3xl text-[#594ef1]" />
+                </motion.div>
 
-                    <div className="mt-1 text-xl font-normal">
-                        {item.name}
-                    </div>
+                {navItems.map((value, index) => (
+                    <motion.div
+                        key={index}  // Added unique key
+                        initial={{}}
+                        whileHover={{ color: "white", scale: 1.12 }}
+                        transition={{ type: "spring", stiffness: 200, damping: 15 }}
+                        onClick={() => navigateOnClick(value.link)}
+                        className="text-[#8C8C8C] text-lg px-6 cursor-pointer hidden md:flex"
+                    >
+                        {value.item}
+                    </motion.div>
+                ))}
+            </div>
+
+            <div className="flex items-center w-full md:w-auto justify-end md:justify-start">
+                <div
+
+                    className="text-[#8C8C8C] px-4 text-lg flex items-center"
+                >
+                    {token ? (
+                        <Button onClick={() => navigateOnClick("/auth")} className="cursor-pointer bg-[#594EF1] hover:bg-[#594ef1e0]" asChild>
+                            <Link to="/auth">Login</Link>
+                        </Button>
+                    ) : (
+                        <>
+
+                        {/* // i want to show this on big screen */}
+                        <div className="hidden md:block">
+                            <Link to="/user">
+                                <AccountIcon size="lg"/>
+                            </Link>
+                        </div>
+                                                
+                            <Drawer>
+                                <DrawerTrigger>
+                                    <motion.span
+                                    initial={{
+                                        rotate:0
+                                    }}
+
+                                    whileTap={{
+                                        rotate:180
+                                    }}
+
+                                    className="cursor-pointer block md:hidden">
+                                        <MenuIcon size="lg" />
+                                    </motion.span>
+                                </DrawerTrigger>
+
+                                <DrawerContent className="bg-[#0A0A0A] block md:hidden">
+                                    <div className="bg-[#0A0A0A] flex flex-col justify-center items-center gap-4 w-full px-2 py-10">
+                                        <div className="px-4 py-4 rounded-md border border-[#404040] w-full text-center cursor-pointer text-white">
+                                            <Link to="/">Home</Link>
+                                        </div>
+                                        <div className="px-4 py-4 rounded-md border border-[#404040] w-full text-center cursor-pointer text-white">
+                                            <Link to="/dashboard">Dashboard</Link>
+                                        </div>
+                                        <div className="px-4 py-4 rounded-md border border-[#404040] w-full text-center cursor-pointer text-white">
+                                            <Link to="/user">Profile</Link>
+                                        </div>
+                                    </div>
+                                </DrawerContent>
+                            </Drawer>
+                        
+                        </>
+                    )}
                 </div>
-            ))
-        }
-    </div>
-  )
-}
+            </div>
+            
 
-export default NavBar
+
+        </div>
+    );
+};
+
+export default NavBar;

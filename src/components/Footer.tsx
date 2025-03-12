@@ -33,7 +33,7 @@ interface SetLinkProp{
 
 const SetLink = ({link, icon}:SetLinkProp) =>{
     return(
-        <a className="text-2xl hover:text-purple-600 transition-all ease-in-out" href={link} target="_blank">
+        <a className="md:text-2xl text-md hover:text-black transition-all ease-in-out" href={link} target="_blank">
             {icon}
         </a>
     )
@@ -44,15 +44,15 @@ const Footer = () => {
 
 
   return (
-    <div className="w-full bg-white mt-10 rounded-md px-8 py-2 flex justify-between   items-center gap-4">
+    <div className="w-full mx-auto h-12 bg-[#594EF1] text-white rounded-md md:px-8 md:py-2 px-2 py-2 flex justify-between   items-center gap-2">
         
 
         <div className="text-lg ">
-            <span className="">Made with ❤️ by <span className="text-purple-600">Nitish</span></span>
+            <span className="">Made with ❤️ by <span className="text-black">Nitish</span></span>
         </div>
 
 
-        <div className="flex gap-6">
+        <div className="flex md:gap-6 gap-4">
             {
                 socialInfo.map((social, index) => (
                     <SetLink key={index} link={social.link} icon={social.icon}/>

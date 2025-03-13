@@ -44,9 +44,8 @@ const Footer = () => {
 
 
   return (
-    <div className="w-full mx-auto h-12 bg-[#594EF1] text-white rounded-md md:px-8 md:py-2 px-2 py-2 flex justify-between   items-center gap-2">
+    <div className="w-full mx-auto mt-6 h-12 bg-[#594EF1] text-white rounded-md md:px-8 md:py-2 px-2 py-2 flex justify-between   items-center gap-2">
         
-
         <div className="text-lg ">
             <span className="">Made with ❤️ by <span className="text-black">Nitish</span></span>
         </div>

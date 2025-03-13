@@ -9,10 +9,14 @@ import EyeIcons from "@/icons/EyeIcons";
 import EyeCloseIcon from "@/icons/EyeCloseIcon";
 
 
+
 // const backend_url = import.meta.env.BACKEND_URL;
 
 
 const Signin = () => {
+
+    const navigate = useNavigate();
+
 
 
     const [username, setUsername] = useState("");
@@ -24,7 +28,16 @@ const Signin = () => {
     const [visible, setVisible] = useState(true);
 
 
-    const navigate = useNavigate();
+    const token = localStorage.getItem("token");
+    if (token) {
+        toast("You are already loggedIn");
+        setTimeout(() => {
+            navigate("/user");
+        }, 1000);
+        return;
+    }
+
+
 
     const handleSignin = async () => {
 

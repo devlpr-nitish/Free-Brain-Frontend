@@ -1,20 +1,12 @@
 import { Link, useNavigate } from "react-router-dom"
-import AccountIcon from "../icons/AccountIcon"
-import DashboardIcon from "../icons/DashboardIcon"
-import { useState } from "react";
-import AddUserIcon from "../icons/AddUserIcon";
+import AccountIcon from "../icons/AccountIcon";
 import { LuBrain } from "react-icons/lu";
 import { motion } from "framer-motion";
 import { Button } from "./ui/button";
 import MenuIcon from "@/icons/MenuIcon";
 import {
     Drawer,
-    DrawerClose,
     DrawerContent,
-    DrawerDescription,
-    DrawerFooter,
-    DrawerHeader,
-    DrawerTitle,
     DrawerTrigger,
 } from "@/components/ui/drawer"
 
@@ -22,6 +14,7 @@ import {
 const NavBar = () => {
 
     const token = localStorage.getItem("token");
+    
     const username = localStorage.getItem("username");
 
     const navItems = [
@@ -53,10 +46,10 @@ const NavBar = () => {
                     <motion.div
                         key={index}  // Added unique key
                         initial={{}}
-                        whileHover={{ color: "white", scale: 1.12 }}
+                        whileHover={{ color:"#594EF1", scale: 1.12 }}
                         transition={{ type: "spring", stiffness: 200, damping: 15 }}
                         onClick={() => navigateOnClick(value.link)}
-                        className="text-[#8C8C8C] text-lg px-6 cursor-pointer hidden md:flex"
+                        className="text-[#8C8C8C] text-lg px-6 cursor-pointer hidden md:block relative"
                     >
                         {value.item}
                     </motion.div>
@@ -65,10 +58,9 @@ const NavBar = () => {
 
             <div className="flex items-center w-full md:w-auto justify-end md:justify-start">
                 <div
-
                     className="text-[#8C8C8C] px-4 text-lg flex items-center"
                 >
-                    {token ? (
+                    {!token ? (
                         <Button onClick={() => navigateOnClick("/auth")} className="cursor-pointer bg-[#594EF1] hover:bg-[#594ef1e0]" asChild>
                             <Link to="/auth">Login</Link>
                         </Button>
@@ -76,7 +68,7 @@ const NavBar = () => {
                         <>
 
                         {/* // i want to show this on big screen */}
-                        <div className="hidden md:block">
+                        <div className="hidden md:block text-[#594EF1] hover:text-[#594ef1e0]">
                             <Link to="/user">
                                 <AccountIcon size="lg"/>
                             </Link>
@@ -93,21 +85,27 @@ const NavBar = () => {
                                         rotate:180
                                     }}
 
-                                    className="cursor-pointer block md:hidden">
+                                    className="cursor-pointer block md:hidden hover:text-[#594EF1]">
                                         <MenuIcon size="lg" />
                                     </motion.span>
                                 </DrawerTrigger>
 
                                 <DrawerContent className="bg-[#0A0A0A] block md:hidden">
                                     <div className="bg-[#0A0A0A] flex flex-col justify-center items-center gap-4 w-full px-2 py-10">
-                                        <div className="px-4 py-4 rounded-md border border-[#404040] w-full text-center cursor-pointer text-white">
-                                            <Link to="/">Home</Link>
+                                        <div
+                                        onClick={() => navigateOnClick("/")}
+                                        className="px-4 py-4 rounded-md border border-[#404040] w-full text-center cursor-pointer text-white hover:border-[#594EF1] transition hover:text-[#594EF1]">
+                                            Home
                                         </div>
-                                        <div className="px-4 py-4 rounded-md border border-[#404040] w-full text-center cursor-pointer text-white">
-                                            <Link to="/dashboard">Dashboard</Link>
+                                        <div
+                                        onClick={() => navigateOnClick("/dashboard")}
+                                        className="px-4 py-4 rounded-md border border-[#404040] w-full text-center cursor-pointer text-white hover:border-[#594EF1] transition hover:text-[#594EF1]">
+                                            Dashboard
                                         </div>
-                                        <div className="px-4 py-4 rounded-md border border-[#404040] w-full text-center cursor-pointer text-white">
-                                            <Link to="/user">Profile</Link>
+                                        <div
+                                        onClick={() => navigateOnClick("/user")}
+                                        className="px-4 py-4 rounded-md border border-[#404040] w-full text-center cursor-pointer text-white hover:border-[#594EF1] transition hover:text-[#594EF1]">
+                                            Profile
                                         </div>
                                     </div>
                                 </DrawerContent>

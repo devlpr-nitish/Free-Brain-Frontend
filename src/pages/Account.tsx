@@ -3,65 +3,101 @@ import AccountIcon from "../icons/AccountIcon";
 import LogoutIcon from "../icons/LogoutIcon";
 import { DashBoardInfo } from "./DashBoard";
 import { toast } from "sonner";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Copy } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import DeleteIcon from "@/icons/DeleteIcon";
 
 
 const Account = () => {
 
   const navigate = useNavigate();
 
-  const logoutUser = () =>{
+  const logoutUser = () => {
 
     localStorage.removeItem("token");
-    localStorage.removeItem("username");  
+    localStorage.removeItem("username");
 
     toast("User Logged out !!!");
 
-    setTimeout(()=>{
+    setTimeout(() => {
       navigate("/auth")
-    },1000)
+    }, 1000)
   }
+  
   return (
-    <div className="flex flex-col w-full px-24 py-28 gap-12 bg-white ">
-      <div className="">
-        <h1 className="text-3xl font-bold">Basic Information</h1>
-      </div>
+    <div className="flex md:flex-row flex-wrap flex-col w-full md:px-24 md:py-12 px-4 py-6 gap-12 bg-[#171717] text-white min-h-[600px]">
+      <div className="flex h-fit flex-col bg-[#0A0A0A] md:w-1/3 px-10 py-6 rounded-md gap-4 min-h-[600px]">
 
-      <div className="flex items-center gap-4 w-1/3">
-        <div className="bg-gray-200 p-6 rounded-full text-purple-600">
-          
-            <AccountIcon size="lg"/>
-          
+        <div className="">
+          <h1 className="text-3xl font-bold"> <span className="text-[#594ef1]">Brain </span>Information</h1>
         </div>
 
-        <div className="flex items-center gap-4" title="logout">
-          <span className="text-xl " >
-            devlprnitish
-          </span>
+        <div className="flex items-center gap-4 w-1/3">
+          <div className="bg-gray-200 p-6 rounded-full text-[#594ef1]">
 
-          <span onClick={logoutUser} className="rotate-90 cursor-pointer hover:text-purple-600">
-            <LogoutIcon/>
-          </span>
-        </div>
-      </div>
+            <AccountIcon size="lg" />
 
-      <div className="flex flex-col gap-4  w-full">
-        {/* <div className="w-1/3 text-xl font-bold text-gray-800">
-          Total Content :{" "}{45}
-        </div> */}
-
-        <div className="w-1/3 flex flex-col gap-2">
-        {DashBoardInfo.map((info, index) => (
-          <div
-            key={index}
-            className="w-full flex items-center gap-2 py-2  rounded-lg"
-          >
-            <div className="text-xl">{info.icon}</div>
-            <div className="text-lg font-medium">{info.name}</div>
-            <div className="text-purple-600">
-              {": "}{10}
-            </div>
           </div>
-        ))}
+
+          <div className="flex items-center gap-4" title="logout">
+            <span className="text-xl opacity-90 " >
+              devlprnitish
+            </span>
+
+            <span onClick={logoutUser} className="rotate-90 cursor-pointer hover:text-[#594ef1]">
+              <LogoutIcon />
+            </span>
+          </div>
+        </div>
+
+        <div className="flex flex-col gap-4  w-full ">
+
+
+          {DashBoardInfo.map((info, index) => (
+            <div
+              key={index}
+              className="w-full flex items-center gap-2 py-2  rounded-lg "
+            >
+              <div className="text-xl">{info.icon}</div>
+              <div className="text-lg font-medium opacity-90">{info.name}</div>
+              <div className="text-[#594ef1]">
+                {": "}{10}
+              </div>
+            </div>
+          ))}
+
+        </div>
+      </div>
+
+      <div className="flex flex-col h-fit gap-6 text-white bg-[#0A0A0A] rounded-md md:px-10 md:py-16 md:w-1/3 px-4 py-6 min-h-[600px]">
+        <div className="">
+          <h1 className="text-3xl font-bold"> <span className="text-[#594ef1]">Sharing </span>Links</h1>
+        </div>
+
+        <div className="">
+           
+          <div className="flex flex-row items-center gap-2  py-2">
+            <div className="bg-[#594ef13f] p-2 rounded-md text-white cursor-pointer hover:text-red-500">
+              <DeleteIcon />
+            </div>
+            <Label htmlFor="link" className="sr-only">
+              Link
+            </Label>
+            <Input
+              id="link"
+              value="https://ui.shadcn.com/docs/installationhttps://ui.shadcn.com/docs/installationhttps://ui.shadcn.com/docs/installation"
+              defaultValue="https://ui.shadcn.com/docs/installation"
+              readOnly
+            />
+
+            <Button type="submit" size="sm" className="px-3 cursor-pointer">
+              <span className="sr-only">Copy</span>
+              <Copy />
+            </Button>
+          </div>
+          
         </div>
       </div>
     </div>

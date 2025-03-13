@@ -6,6 +6,8 @@ import { FaCode } from "react-icons/fa";
 import ShareICon from "@/icons/ShareICon";
 import DeleteIcon from "@/icons/DeleteIcon";
 import CalenderIcon from "@/icons/CalenderIcon";
+import { motion } from "framer-motion";
+
 
 interface CardProps {
   title: string;
@@ -39,8 +41,29 @@ const Card = ({ title, type, content, tags, createdAt }: CardProps) => {
 
 
   return (
-    <div className="bg-gray-100 w-full max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl overflow-hidden flex flex-col gap-4  rounded-md p-4 border border-gray-300 shadow-md transition hover:border-purple-500 cursor-pointer">
-      <div className=" flex flex-wrap items-center justify-between border-b border-gray-300 pb-2">
+    <motion.div
+    initial={{
+      opacity:0,
+      scale:0.9
+    }}
+
+    whileInView={{
+      opacity:1,
+      scale:1
+    }}
+
+    viewport={{
+      once:false,
+      amount:0.6
+    }}
+
+    transition={{
+      duration:0.6,
+      ease:"easeIn"
+    }}
+
+    className="bg-[#0A0A0A] text-white w-full max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl overflow-hidden flex flex-col gap-4  rounded-md p-4 border border-gray-500  shadow-md transition hover:bg-[#1b1b1b] hover:border-[#594ef1] cursor-pointer">
+      <div className=" flex flex-wrap items-center justify-between border-b border-gray-500 pb-2">
         <div className="flex items-center font-bold gap-2 text-xl ">
           <div className="opacity-60 ">{typeInfo[type]}</div>
           <div className="title">{truncateText(title, 20)}</div>
@@ -67,13 +90,13 @@ const Card = ({ title, type, content, tags, createdAt }: CardProps) => {
 
       <div className="flex items-center justify-end gap-2 text-sm font-normal opacity-60">
         <div className="">
-            <CalenderIcon />
+          <CalenderIcon />
         </div>
         <div className="">
-         {formatDate(createdAt)}
+          {formatDate(createdAt)}
         </div>
-        </div>
-    </div>
+      </div>
+    </motion.div>
   );
 };
 

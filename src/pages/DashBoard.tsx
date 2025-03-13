@@ -35,6 +35,7 @@ import { objectIdRegex } from "@/components/AddContentForm";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { motion } from "framer-motion";
 
 
 
@@ -45,17 +46,9 @@ export const DashBoardInfo = [
   { name: "Videos", icon: <LiaFileVideoSolid /> },
   { name: "Documents", icon: <IoDocumentsOutline /> },
   { name: "Links", icon: <CiLink /> },
-  // { name: "Tags", icon: <GoHash /> },
   { name: "Codes", icon: <CodeIcon /> },
-  { name: "Codes", icon: <CodeIcon /> },
-  { name: "Codes", icon: <CodeIcon /> },
-  { name: "Codes", icon: <CodeIcon /> },
-  { name: "Cod cdscdcdcdcdfvdfvdfvdfes", icon: <CodeIcon /> },
 ];
 
-const typeSchema = z.object({
-  typename: z.string().min(3, "type name cannot be less than 3 length").max(10, "type name cannot be more than 10 length")
-})
 
 const DashBoard = () => {
   const navigate = useNavigate();
@@ -71,6 +64,11 @@ const DashBoard = () => {
     }, 1000);
     return;
   }
+
+
+  const typeSchema = z.object({
+    typename: z.string().min(3, "type name cannot be less than 3 length").max(10, "type name cannot be more than 10 length")
+  })
 
   const form = useForm<z.infer<typeof typeSchema>>({
     resolver: zodResolver(typeSchema),
@@ -132,20 +130,26 @@ const DashBoard = () => {
     <div className="w-full bg-[#171717] rounded-md min-h-[750px] flex flex-col">
       <div className="flex  items-center md:flex-row flex-wrap w-full p-3 bg-[#171717] border-b-2  border-black shadow-md justify-center gap-6">
         {visibleTypes.map((info, index) => (
-          <div
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.6, ease: "easeInOut" }}
             key={index}
             className="flex items-center gap-2 px-4 py-2 text-white rounded-lg cursor-pointer border border-[#594ef1] shadow-sm hover:bg-[#594ef1] transition"
           >
             <div className="text-xl">{info.icon}</div>
             <div className="text-lg font-medium">{info.name}</div>
-          </div>
+          </motion.div>
         ))}
 
-        <div
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.6, ease: "easeInOut" }}
           onClick={() => setShowLimitedtypes((prev) => !prev)}
           className="flex items-center gap-1 text-white opacity-90 hover:text-[#594ef1] transition cursor-pointer" >
           {showLimitedtypes ? <> Expand <ExpandIcon /> </> : <> Collapse <CollapseIcon /> </>}
-        </div>
+        </motion.div>
 
 
         <Dialog >
@@ -161,10 +165,12 @@ const DashBoard = () => {
           </DialogTrigger>
 
 
-          <DialogContent className="flex bg-black border-none text-white flex-col items-center justify-center absolute md:left-173 md:top-100 left-4 top-100 sm:max-w-md">
+          <DialogContent className="flex bg-black border border-gray-500 text-white flex-col items-center justify-center absolute md:left-173 md:top-100 left-4 top-100 sm:max-w-md">
             <DialogHeader>
               <DialogTitle>Add <span className="text-[#594EF1]">new type</span></DialogTitle>
             </DialogHeader>
+
+
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
                 <FormField
@@ -215,7 +221,7 @@ const DashBoard = () => {
             </DialogTrigger>
 
 
-            <DialogContent className="flex bg-black border-none text-white flex-col items-center justify-center absolute md:left-173 md:top-100 left-4 top-100 sm:max-w-md">
+            <DialogContent className="flex bg-black border border-gray-500 text-white flex-col items-center justify-center absolute md:left-173 md:top-100 left-4 top-100 sm:max-w-md">
               <DialogHeader>
                 <DialogTitle>You are sharing your brain</DialogTitle>
                 <DialogDescription>
@@ -267,6 +273,94 @@ const DashBoard = () => {
             
           ))} */}
 
+          <Card
+            key={1}
+            title={"value.title"}
+            content={"value.content"}
+            type="link"
+            tags={["avsd", "dcscsd"]}
+            createdAt="2023-12-25"
+          />
+          <Card
+            key={1}
+            title={"value.title"}
+            content={"value.content"}
+            type="link"
+            tags={["avsd", "dcscsd"]}
+            createdAt="2023-12-25"
+          />
+          <Card
+            key={1}
+            title={"value.title"}
+            content={"value.content"}
+            type="link"
+            tags={["avsd", "dcscsd"]}
+            createdAt="2023-12-25"
+          />
+          <Card
+            key={1}
+            title={"value.title"}
+            content={"value.content"}
+            type="link"
+            tags={["avsd", "dcscsd"]}
+            createdAt="2023-12-25"
+          />
+          <Card
+            key={1}
+            title={"value.title"}
+            content={"value.content"}
+            type="link"
+            tags={["avsd", "dcscsd"]}
+            createdAt="2023-12-25"
+          />
+          <Card
+            key={1}
+            title={"value.title"}
+            content={"value.content"}
+            type="link"
+            tags={["avsd", "dcscsd"]}
+            createdAt="2023-12-25"
+          />
+          <Card
+            key={1}
+            title={"value.title"}
+            content={"value.content"}
+            type="link"
+            tags={["avsd", "dcscsd"]}
+            createdAt="2023-12-25"
+          />
+          <Card
+            key={1}
+            title={"value.title"}
+            content={"value.content"}
+            type="link"
+            tags={["avsd", "dcscsd"]}
+            createdAt="2023-12-25"
+          />
+          <Card
+            key={1}
+            title={"value.title"}
+            content={"value.content"}
+            type="link"
+            tags={["avsd", "dcscsd"]}
+            createdAt="2023-12-25"
+          />
+          <Card
+            key={1}
+            title={"value.title"}
+            content={"value.content"}
+            type="link"
+            tags={["avsd", "dcscsd"]}
+            createdAt="2023-12-25"
+          />
+          <Card
+            key={1}
+            title={"value.title"}
+            content={"value.content"}
+            type="link"
+            tags={["avsd", "dcscsd"]}
+            createdAt="2023-12-25"
+          />
           <Card
             key={1}
             title={"value.title"}

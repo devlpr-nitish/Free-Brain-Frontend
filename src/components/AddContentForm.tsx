@@ -27,6 +27,7 @@ import {
 import { backend_url } from "@/utils/bakendUrl";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import DeleteIcon from "@/icons/DeleteIcon";
 
 export const objectIdRegex = /^[a-f\d]{24}$/i;
 
@@ -172,9 +173,9 @@ export function AddContentForm() {
                       <button
                         type="button"
                         onClick={() => handleRemoveField(index)}
-                        className="cursor-pointer flex items-center text-red-500 mt-2"
+                        className="flex items-center bg-[#594ef13f] p-2 rounded-md text-white cursor-pointer hover:text-red-500"
                       >
-                        <CloseIcon />
+                        <DeleteIcon />
                       </button>
                     )}
                   </div>

@@ -1,7 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-
+import {motion} from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 
@@ -16,7 +16,6 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import PlusIcon from "@/icons/PlusIcon";
-import CloseIcon from "@/icons/CloseIcon";
 import {
   Select,
   SelectContent,
@@ -28,6 +27,7 @@ import { backend_url } from "@/utils/bakendUrl";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import DeleteIcon from "@/icons/DeleteIcon";
+import ShinnyEffect from "./ShinnyEffect";
 
 export const objectIdRegex = /^[a-f\d]{24}$/i;
 
@@ -53,6 +53,27 @@ const formSchema = z.object({
     )
     .optional(),
 });
+
+
+
+const typeNameValue = [
+  {
+    name: "twitter",
+    typeId: "67c74de8b990474f13e86d02"
+  },
+  {
+    name: "docs",
+    typeId: "67c74de8b990474f13e86d02"
+  },
+  {
+    name: "youtube",
+    typeId: "67c74de8b990474f13e86d02"
+  },
+  {
+    name: "code",
+    typeId: "67c74de8b990474f13e86d02"
+  }
+]
 
 export function AddContentForm() {
 
@@ -120,7 +141,9 @@ export function AddContentForm() {
   };
 
   return (
-    <div className="p-14 rounded-md bg-[#171717] text-white">
+    <div className="p-14 rounded-md bg-transparent text-white relative overflow-hidden">
+
+      
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <FormField
@@ -209,11 +232,11 @@ export function AddContentForm() {
                   </FormControl>
 
                   <SelectContent className="bg-[#0A0A0A] flex flex-col gap-4 text-white outline-0 border-none">
-                    <SelectItem value="67c74de8b990474f13e86d02">
-                      m@example.com
-                    </SelectItem>
-                    <SelectItem value="m@google.com">m@google.com</SelectItem>
-                    <SelectItem value="m@support.com">m@support.com</SelectItem>
+                    {
+                      typeNameValue.map((type) => (
+                        <SelectItem value={type.typeId}>{type.name}</SelectItem>
+                      ))
+                    }
                   </SelectContent>
                 </Select>
                 <FormMessage />

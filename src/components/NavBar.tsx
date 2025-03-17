@@ -61,7 +61,7 @@ const NavBar = () => {
                     className="text-[#8C8C8C] px-4 text-lg flex items-center"
                 >
                     {!token ? (
-                        <Button onClick={() => navigateOnClick("/auth")} className="cursor-pointer bg-[#594EF1] hover:bg-[#594ef1e0]" asChild>
+                        <Button onClick={() => navigateOnClick("/auth")} className="cursor-pointer rounded-sm bg-transparent border text-[#594EF1] border-[#594EF1] hover:bg-[#594ef1e0] hover:text-white" asChild>
                             <Link to="/auth">Login</Link>
                         </Button>
                     ) : (

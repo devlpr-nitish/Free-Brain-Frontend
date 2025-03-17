@@ -7,6 +7,7 @@ import { toast } from "sonner";
 import { motion } from "framer-motion";
 import EyeIcons from "@/icons/EyeIcons";
 import EyeCloseIcon from "@/icons/EyeCloseIcon";
+import ShinnyEffect from "@/components/ShinnyEffect";
 
 
 
@@ -116,7 +117,67 @@ const Signin = () => {
 
 
     return (
-        <div className=" w-full flex flex-col md:flex-row  items-center justify-center md:px-24 md:py-20 px-2 py-4 rounded-md ">
+        <div className=" w-full flex flex-col md:flex-row  items-center justify-center md:px-24 md:py-20 px-2 py-4 rounded-md relative overflow-hidden">
+
+            {/* ShinnyEffect with Improved Positioning */}
+            <motion.div
+                className="absolute top-[-50px] left-[-50px] hidden md:block"
+                animate={{
+                    scale: [1, 1.2, 1],
+                    opacity: [0.3, 0.8, 0.3]
+                }}
+                transition={{
+                    duration: 3,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                }}
+            >
+                <ShinnyEffect left={10} top={10} size={300} />
+            </motion.div>
+            <motion.div
+                className="absolute top-[-50px] right-[-50px] md:block"
+                animate={{
+                    scale: [1, 1.2, 1],
+                    opacity: [0.3, 0.8, 0.3]
+                }}
+                transition={{
+                    duration: 3,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                }}
+            >
+                <ShinnyEffect right={10} top={10} size={300} />
+            </motion.div>
+            <motion.div
+                className="absolute top-[-50px] left-[-50px] md:block"
+                animate={{
+                    scale: [1, 1.2, 1],
+                    opacity: [0.3, 0.8, 0.3]
+                }}
+                transition={{
+                    duration: 3,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                }}
+            >
+                <ShinnyEffect left={50} top={400} size={300} />
+            </motion.div>
+            <motion.div
+                className="absolute top-[-50px] left-[-50px]  md:block"
+                animate={{
+                    scale: [1, 1.2, 1],
+                    opacity: [0.3, 0.8, 0.3]
+                }}
+                transition={{
+                    duration: 3,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                }}
+            >
+                <ShinnyEffect right={100} top={100} size={300} />
+            </motion.div>
+
+            
             <div className="md:w-1/2 w-full flex flex-col items-center justify-center gap-10 md:p-28 p-4  ">
                 <div className="flex flex-col justify-center gap-4 items-center">
 

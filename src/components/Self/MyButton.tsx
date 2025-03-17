@@ -2,7 +2,7 @@ import { ReactElement } from "react";
 import {motion} from "framer-motion";
 
 interface ButtonProps {
-    variant: "primary" | "secondary";
+    variant: "primary" | "secondary" | "primary-delete" | "primary-home";
     size: "sm" | "md" | "lg";
     text: string;
     startIcon?: ReactElement;
@@ -13,6 +13,8 @@ interface ButtonProps {
 
 const variantStyles = {
     "primary": "bg-[#594ef1] text-white shadow-sm hover:bg-[#594ef1e0] transition",
+    "primary-delete": "bg-red-600 text-white shadow-sm hover:bg-red-500 transition",
+    "primary-home": "bg-[#594ef1] text-white shadow-sm hover:bg-[#594ef1e0] transition",
     "secondary": "border border-[#594ef1] text-[#594ef1] shadow-sm hover:bg-[#594ef1] hover:text-white transition",
 }
 

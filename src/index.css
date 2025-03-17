@@ -122,3 +122,13 @@
     @apply bg-background text-foreground;
   }
 }
+
+
+
+.shiny-effect {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 1;
+  background: radial-gradient(circle, #594ef1, transparent 70%);
+}

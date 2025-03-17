@@ -8,11 +8,12 @@ import NotFound from "./pages/NotFound";
 import Signin from "./pages/Auth";
 import AddContent from "./pages/AddContent";
 import "./index.css";
+import DetailContent from "./pages/DetailContent";
 
 function App() {
   return (
     <Router>
-      <div className="bg-[#0A0A0A] pt-10 px-10 md:px-36 min-h-screen flex flex-col scrollbar-custom overflow-y-scroll">
+      <div className="bg-[#0A0A0A] pt-10 px-10 md:px-36 min-h-screen flex flex-col">
         <NavBar />
         <div className="flex-grow">
           <Routes>
@@ -21,6 +22,7 @@ function App() {
             <Route path="/addcontent" element={<AddContent />} />
             <Route path="/user" element={<Account />} />
             <Route path="/auth" element={<Signin />} />
+            <Route path="/content/:id" element={<DetailContent />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </div>

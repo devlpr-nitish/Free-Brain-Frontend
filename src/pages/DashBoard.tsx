@@ -31,30 +31,45 @@ import { backend_url } from "@/utils/bakendUrl";
 import ExpandIcon from "@/icons/ExpandIcon";
 import CollapseIcon from "@/icons/CollapseIcon";
 import { z } from "zod";
-import { objectIdRegex } from "@/components/AddContentForm";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { motion } from "framer-motion";
+import ShinnyEffect from "@/components/ShinnyEffect";
+import axios from "axios";
 
 
 
 
 export const DashBoardInfo = [
   { name: "All", icon: <TiThSmallOutline /> },
-  { name: "Twitters", icon: <FaXTwitter /> },
-  { name: "Videos", icon: <LiaFileVideoSolid /> },
-  { name: "Documents", icon: <IoDocumentsOutline /> },
-  { name: "Links", icon: <CiLink /> },
-  { name: "Codes", icon: <CodeIcon /> },
+  { name: "Twitter", icon: <FaXTwitter /> },
+  { name: "Video", icon: <LiaFileVideoSolid /> },
+  { name: "Document", icon: <IoDocumentsOutline /> },
+  { name: "Link", icon: <CiLink /> },
+  { name: "Code", icon: <CodeIcon /> },
 ];
+
+interface Content {
+  title: string;
+  content: string;
+  link: string[]; 
+  type: string; 
+  typename: string; 
+  tags: string[];
+  userId: string;
+  _id: string;
+  createdAt: string; 
+}
 
 
 const DashBoard = () => {
   const navigate = useNavigate();
-  const [contents, setContents] = useState([]);
   const [loading, setLoading] = useState(false);
   const [showLimitedtypes, setShowLimitedtypes] = useState(true);
+  const [contents, setContents] = useState<Content[]>([]);
+  const [selectedType, setSelectedType] = useState("All");
+
 
   const token = localStorage.getItem("token");
   if (!token) {
@@ -64,6 +79,14 @@ const DashBoard = () => {
     }, 1000);
     return;
   }
+
+
+  // Filtered content logic
+  const filteredContents = selectedType === "All"
+    ? contents
+    : contents.filter((content) => content.typename.toLowerCase() === selectedType.toLowerCase());
+
+
 
 
   const typeSchema = z.object({
@@ -97,21 +120,21 @@ const DashBoard = () => {
           }, 1000);
           return;
         }
-        const response = await fetch(`${backend_url}/contents`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: token,
-          },
-        });
 
-        if (response.ok) {
-          const data = await response.json();
-          setContents(data.contents)
-        } else {
-          const data = await response.json();
-          toast(data.message || "Failed to fetch contents");
-        }
+        const response = await axios.get(
+          `${backend_url}/contents`,
+          {
+            headers: {
+              Authorization: `${token}`,
+              'Content-Type': 'application/json',
+            }
+          }
+        );
+
+        const {contents, success} = response.data;
+        setContents(contents);
+
+        
       } catch (error) {
         toast("Internal server error while fetching content")
       } finally {
@@ -119,15 +142,16 @@ const DashBoard = () => {
       }
     }
 
-    // fetchContents();
+    fetchContents();  
   }, [loading])
 
 
   const visibleTypes = showLimitedtypes ? DashBoardInfo.slice(0, 6) : DashBoardInfo;
 
 
+
   return (
-    <div className="w-full bg-[#171717] rounded-md min-h-[750px] flex flex-col">
+    <div className="w-full bg-[#171717] rounded-md min-h-[750px] flex flex-col relative overflow-hidden">
       <div className="flex  items-center md:flex-row flex-wrap w-full p-3 bg-[#171717] border-b-2  border-black shadow-md justify-center gap-6">
         {visibleTypes.map((info, index) => (
           <motion.div
@@ -135,7 +159,8 @@ const DashBoard = () => {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6, ease: "easeInOut" }}
             key={index}
-            className="flex items-center gap-2 px-4 py-2 text-white rounded-lg cursor-pointer border border-[#594ef1] shadow-sm hover:bg-[#594ef1] transition"
+            className={`flex items-center gap-2 px-4 py-2 text-white rounded-lg cursor-pointer border border-[#594ef1] shadow-sm hover:bg-[#594ef1] transition ${selectedType == info.name ? "bg-[#594ef1] text-white" : "hover:bg-[#594ef1] hover:text-white"}  `}
+            onClick={() => setSelectedType(info.name)}
           >
             <div className="text-xl">{info.icon}</div>
             <div className="text-lg font-medium">{info.name}</div>
@@ -225,7 +250,7 @@ const DashBoard = () => {
               <DialogHeader>
                 <DialogTitle>You are sharing your brain</DialogTitle>
                 <DialogDescription>
-                  Anyone who get this link will be able to see your brain data.
+                  Anyone who get this link will be able to see your <span className="text-bold text-red-500">whole</span> brain data.
                 </DialogDescription>
               </DialogHeader>
               <div className="flex items-center space-x-2">
@@ -267,156 +292,96 @@ const DashBoard = () => {
 
         </div>
 
-        <div className="w-full mt-12 p-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 items-center mx-auto">
-          {/* {contents?.map((value) => (
-            
-            
-          ))} */}
+        {/* ShinnyEffect with Improved Positioning */}
+      <motion.div
+        className="absolute top-[-50px] left-[-50px] hidden md:block"
+        animate={{
+          scale: [1, 1.2, 1],
+          opacity: [0.3, 0.8, 0.3]
+        }}
+        transition={{
+          duration: 3,
+          repeat: Infinity,
+          ease: "easeInOut"
+        }}
+      >
+        <ShinnyEffect left={10} top={10} size={400} />
+      </motion.div>
+      <motion.div
+        className="absolute top-[-50px] right-[-50px] md:block"
+        animate={{
+          scale: [1, 1.2, 1],
+          opacity: [0.3, 0.8, 0.3]
+        }}
+        transition={{
+          duration: 3,
+          repeat: Infinity,
+          ease: "easeInOut"
+        }}
+      >
+        <ShinnyEffect right={10} top={10} size={400} />
+      </motion.div>
+      <motion.div
+        className="absolute top-[-50px] left-[-50px] md:block"
+        animate={{
+          scale: [1, 1.2, 1],
+          opacity: [0.3, 0.8, 0.3]
+        }}
+        transition={{
+          duration: 3,
+          repeat: Infinity,
+          ease: "easeInOut"
+        }}
+      >
+        <ShinnyEffect left={50} top={400} size={400} />
+      </motion.div>
+      <motion.div
+        className="absolute top-[-50px] left-[-50px]  md:block"
+        animate={{
+          scale: [1, 1.2, 1],
+          opacity: [0.3, 0.8, 0.3]
+        }}
+        transition={{
+          duration: 3,
+          repeat: Infinity,
+          ease: "easeInOut"
+        }}
+      >
+        <ShinnyEffect right={100} top={100} size={400} />
+      </motion.div>
 
-          <Card
-            key={1}
-            title={"value.title"}
-            content={"value.content"}
-            type="link"
-            tags={["avsd", "dcscsd"]}
-            createdAt="2023-12-25"
-          />
-          <Card
-            key={1}
-            title={"value.title"}
-            content={"value.content"}
-            type="link"
-            tags={["avsd", "dcscsd"]}
-            createdAt="2023-12-25"
-          />
-          <Card
-            key={1}
-            title={"value.title"}
-            content={"value.content"}
-            type="link"
-            tags={["avsd", "dcscsd"]}
-            createdAt="2023-12-25"
-          />
-          <Card
-            key={1}
-            title={"value.title"}
-            content={"value.content"}
-            type="link"
-            tags={["avsd", "dcscsd"]}
-            createdAt="2023-12-25"
-          />
-          <Card
-            key={1}
-            title={"value.title"}
-            content={"value.content"}
-            type="link"
-            tags={["avsd", "dcscsd"]}
-            createdAt="2023-12-25"
-          />
-          <Card
-            key={1}
-            title={"value.title"}
-            content={"value.content"}
-            type="link"
-            tags={["avsd", "dcscsd"]}
-            createdAt="2023-12-25"
-          />
-          <Card
-            key={1}
-            title={"value.title"}
-            content={"value.content"}
-            type="link"
-            tags={["avsd", "dcscsd"]}
-            createdAt="2023-12-25"
-          />
-          <Card
-            key={1}
-            title={"value.title"}
-            content={"value.content"}
-            type="link"
-            tags={["avsd", "dcscsd"]}
-            createdAt="2023-12-25"
-          />
-          <Card
-            key={1}
-            title={"value.title"}
-            content={"value.content"}
-            type="link"
-            tags={["avsd", "dcscsd"]}
-            createdAt="2023-12-25"
-          />
-          <Card
-            key={1}
-            title={"value.title"}
-            content={"value.content"}
-            type="link"
-            tags={["avsd", "dcscsd"]}
-            createdAt="2023-12-25"
-          />
-          <Card
-            key={1}
-            title={"value.title"}
-            content={"value.content"}
-            type="link"
-            tags={["avsd", "dcscsd"]}
-            createdAt="2023-12-25"
-          />
-          <Card
-            key={1}
-            title={"value.title"}
-            content={"value.content"}
-            type="link"
-            tags={["avsd", "dcscsd"]}
-            createdAt="2023-12-25"
-          />
-          <Card
-            key={1}
-            title={"value.title"}
-            content={"value.content"}
-            type="link"
-            tags={["avsd", "dcscsd"]}
-            createdAt="2023-12-25"
-          />
-          <Card
-            key={1}
-            title={"value.title"}
-            content={"value.content"}
-            type="link"
-            tags={["avsd", "dcscsd"]}
-            createdAt="2023-12-25"
-          />
-          <Card
-            key={1}
-            title={"value.title"}
-            content={"value.content"}
-            type="link"
-            tags={["avsd", "dcscsd"]}
-            createdAt="2023-12-25"
-          />
-          <Card
-            key={1}
-            title={"value.title"}
-            content={"value.content"}
-            type="link"
-            tags={["avsd", "dcscsd"]}
-            createdAt="2023-12-25"
-          />
-          <Card
-            key={1}
-            title={"value.title"}
-            content={"value.content"}
-            type="link"
-            tags={["avsd", "dcscsd"]}
-            createdAt="2023-12-25"
-          />
-          <Card
-            key={1}
-            title={"value.title"}
-            content={"value.content"}
-            type="link"
-            tags={["avsd", "dcscsd"]}
-            createdAt="2023-12-25"
-          />
+        <div className="w-full mt-12 p-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 items-center mx-auto">
+
+          {
+            filteredContents?.length == 0 ?
+              (
+                <div className="col-span-full text-center text-white py-8">
+                  <p className="text-2xl font-semibold">No Content <span className="text-[#594EF1]">Found</span></p>
+                  <p className="text-gray-400 mt-2">Try changing the filter or adding new content.</p>
+                </div>
+              )
+              
+              :
+
+              (
+                filteredContents.map((content) => (
+
+                  <Card
+                    key={content._id}
+                    id={content._id}
+                    title={content.title}
+                    content={content.content}
+                    links={content.link}
+                    type={content.typename}
+                    tags={content.tags}
+                    createdAt={content.createdAt}
+                    // how to pass these two in this card
+                    setContents={setContents}
+                    contents={contents}
+                  />
+
+                )))
+          }
 
         </div>
       </div>

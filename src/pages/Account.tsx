@@ -8,6 +8,9 @@ import { Label } from "@/components/ui/label";
 import { Copy } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import DeleteIcon from "@/icons/DeleteIcon";
+import {motion} from "framer-motion";
+import ShinnyEffect from "@/components/ShinnyEffect";
+
 
 
 const Account = () => {
@@ -27,7 +30,65 @@ const Account = () => {
   }
   
   return (
-    <div className="flex md:flex-row flex-wrap flex-col w-full md:px-24 md:py-12 px-4 py-6 gap-12 bg-[#171717] text-white min-h-[600px]">
+    <div className="relative overflow-hidden flex md:flex-row flex-wrap flex-col w-full md:px-24 md:py-12 px-4 py-6 gap-12 bg-[#171717] text-white min-h-[600px]">
+
+      {/* ShinnyEffect with Improved Positioning */}
+      <motion.div
+        className="absolute top-[-50px] left-[-50px] hidden md:block"
+        animate={{
+          scale: [1, 1.2, 1],
+          opacity: [0.3, 0.8, 0.3]
+        }}
+        transition={{
+          duration: 3,
+          repeat: Infinity,
+          ease: "easeInOut"
+        }}
+      >
+        <ShinnyEffect left={10} top={10} size={300} />
+      </motion.div>
+      <motion.div
+        className="absolute top-[-50px] right-[-50px] md:block"
+        animate={{
+          scale: [1, 1.2, 1],
+          opacity: [0.3, 0.8, 0.3]
+        }}
+        transition={{
+          duration: 3,
+          repeat: Infinity,
+          ease: "easeInOut"
+        }}
+      >
+        <ShinnyEffect right={10} top={10} size={300} />
+      </motion.div>
+      <motion.div
+        className="absolute top-[-50px] left-[-50px] md:block"
+        animate={{
+          scale: [1, 1.2, 1],
+          opacity: [0.3, 0.8, 0.3]
+        }}
+        transition={{
+          duration: 3,
+          repeat: Infinity,
+          ease: "easeInOut"
+        }}
+      >
+        <ShinnyEffect left={50} top={400} size={300} />
+      </motion.div>
+      <motion.div
+        className="absolute top-[-50px] left-[-50px]  md:block"
+        animate={{
+          scale: [1, 1.2, 1],
+          opacity: [0.3, 0.8, 0.3]
+        }}
+        transition={{
+          duration: 3,
+          repeat: Infinity,
+          ease: "easeInOut"
+        }}
+      >
+        <ShinnyEffect right={100} top={100} size={300} />
+      </motion.div>
       <div className="flex h-fit flex-col bg-[#0A0A0A] md:w-1/3 px-10 py-6 rounded-md gap-4 min-h-[600px]">
 
         <div className="">
@@ -92,7 +153,7 @@ const Account = () => {
               readOnly
             />
 
-            <Button type="submit" size="sm" className="px-3 cursor-pointer">
+            <Button type="submit" size="sm" className="px-3 cursor-pointer hover:text-[#594ef1]">
               <span className="sr-only">Copy</span>
               <Copy />
             </Button>
